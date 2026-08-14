@@ -9,8 +9,8 @@ async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
 
   const word = await Word.findOneAndUpdate(
-    { text: "yeah" },
-    { text: "yeah", approved: true },
+    { text: "need to required to" },
+    { text: "need to required to", approved: true },
     { upsert: true, new: true },
   );
 

@@ -7,7 +7,6 @@ const entrySchema = new mongoose.Schema(
       ref: "Word",
       required: true,
     },
-
     count: {
       type: Number,
       required: true,
