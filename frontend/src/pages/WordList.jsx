@@ -35,6 +35,11 @@ function WordList() {
                     {w.text}
                 </Link>
             ))}
+
+            <Link to="/propose" style={{ display: 'block', marginTop: 16, fontSize: 14 }}>
+                + Suggest a new word
+            </Link>
+            
         </div>
     );
 }

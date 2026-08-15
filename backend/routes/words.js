@@ -11,6 +11,31 @@ router.get("/", async (req, res) => {
   res.json(words);
 });
 
+// word proposal
+router.post("/propose", async (req, res) => {
+  const { text } = req.body;
+  if (!text || typeof text !== "string" || !text.trim()) {
+    return res.status(400).json({ error: "text is required" });
+  }
+
+  try {
+    const word = await Word.create({
+      text: text.trim().toLowerCase(),
+      approved: false,
+    });
+    return res
+      .status(201)
+      .json({ message: "Word Registered! Approval Pending.", word });
+  } catch (err) {
+    if (err.code == 11000) {
+      return res
+        .status(409)
+        .json({ error: "That word has already been proposed/registered." });
+    }
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 // submit or update today's count
 router.post("/:id/entries", ensureSession, async (req, res) => {
   const { count } = req.body;
