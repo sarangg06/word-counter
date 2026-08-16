@@ -11,6 +11,13 @@ router.get("/", async (req, res) => {
   res.json(words);
 });
 
+// single word fetch
+router.get("/:id", async (req, res) => {
+  const word = await Word.findOne({ _id: req.params.id, approved: true });
+  if (!word) return res.status(404).json({ error: "Word not found" });
+  res.json(word);
+});
+
 // word proposal
 router.post("/propose", async (req, res) => {
   const { text } = req.body;

@@ -6,9 +6,16 @@ import {
 
 function WordDetail() {
     const { id } = useParams();
+    const [word, setWord] = useState(null);
     const [stats, setStats] = useState([]);
     const [count, setCount] = useState('');
     const [status, setStatus] = useState('');
+
+    useEffect(() => {
+      fetch(`/api/words/${id}`)
+        .then((res) => res.json())
+        .then(setWord);
+    }, [id]);
 
     const loadStats = () => {
         fetch(`/api/words/${id}/stats`)
@@ -36,7 +43,9 @@ function WordDetail() {
 
     return (
     <div style={{ padding: 16, maxWidth: 480, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 20 }}>Today's count</h1>
+      <h1 style={{ fontSize: 20 }}>
+        Today's count{word ? ` for "${word.text}"` : ''}
+      </h1>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
         <input
