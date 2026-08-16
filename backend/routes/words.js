@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 router.post("/propose", async (req, res) => {
   const { text } = req.body;
   if (!text || typeof text !== "string" || !text.trim()) {
-    return res.status(400).json({ error: "text is required" });
+    return res.status(400).json({ error: "Text is required" });
   }
 
   try {
@@ -36,17 +36,17 @@ router.post("/propose", async (req, res) => {
   }
 });
 
-// submit or update today's count
+// submit or update 's count
 router.post("/:id/entries", ensureSession, async (req, res) => {
   const { count } = req.body;
   if (typeof count !== "number" || count < 0) {
     return res
       .status(400)
-      .json({ error: "count must be a non-negative number" });
+      .json({ error: "Count must be a non-negative number" });
   }
 
   const word = await Word.findOne({ _id: req.params.id, approved: true });
-  if (!word) return res.status(404).json({ error: "word not found" });
+  if (!word) return res.status(404).json({ error: "Word not found" });
 
   const entry = await Entry.findOneAndUpdate(
     { word: word._id, sessionId: req.sessionId, date: startOfDay() },
